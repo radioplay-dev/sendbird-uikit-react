@@ -49,26 +49,6 @@ function OpenChannelListUI({
   } = useOpenChannelListContext();
   const { stringSet } = useContext(LocalizationContext);
 
-  const handleScroll = (e) => {
-    const element = e.target;
-    const {
-      scrollTop,
-      clientHeight,
-      scrollHeight,
-    } = element;
-    const isAboutSame = (a, b, px) => (Math.abs(a - b) <= px);
-    if (isAboutSame(clientHeight + scrollTop, scrollHeight, 10)) {
-      fetchNextChannels((messages) => {
-        if (messages) {
-          try {
-            element.scrollTop = scrollHeight - clientHeight;
-          } catch (error) {
-            //
-          }
-        }
-      });
-    }
-  };
   const handleOnClickCreateChannel = () => {
     setShowCreateChannel(true);
   };
@@ -200,7 +180,6 @@ function OpenChannelListUI({
       <div
         className="sendbird-open-channel-list-ui__channel-list"
         ref={scrollRef}
-        onScroll={handleScroll}
         >
         {MemoizedPlaceHolder}
         {MemoizedAllChannels}
