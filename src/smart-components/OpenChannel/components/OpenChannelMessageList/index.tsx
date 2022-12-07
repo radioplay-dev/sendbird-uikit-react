@@ -30,33 +30,6 @@ function OpenchannelMessageList(
   const scrollRef = ref || useRef(null);
   const [showScrollDownButton, setShowScrollDownButton] = useState(false);
 
-  const handleOnScroll = (e) => {
-    const element = e.target;
-    const {
-      scrollTop,
-      scrollHeight,
-      clientHeight,
-    } = element;
-    if (scrollHeight > scrollTop + clientHeight + 1) {
-      setShowScrollDownButton(true);
-    } else {
-      setShowScrollDownButton(false);
-    }
-
-    if (!hasMore) {
-      return;
-    }
-    if (scrollTop === 0) {
-      const nodes = scrollRef.current.querySelectorAll('.sendbird-msg--scroll-ref');
-      const first = nodes && nodes[0];
-      onScroll(() => {
-        try {
-          first.scrollIntoView();
-        } catch (error) { }
-      });
-    }
-  };
-
   const scrollToBottom = () => {
     if (scrollRef && scrollRef.current) {
       scrollRef.current.scrollTo(0, scrollRef.current.scrollHeight);
@@ -113,7 +86,6 @@ function OpenchannelMessageList(
             'sendbird-openchannel-conversation-scroll__container__item-container',
             (allMessages.length > 0) ? '' : 'no-messages',
           ].join(' ')}
-          onScroll={handleOnScroll}
           ref={scrollRef}
         >
           {memoizedMessageList}
